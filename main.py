@@ -108,11 +108,16 @@ report = '''
 WITH RankedBooks AS (
     SELECT
         ROW_NUMBER() OVER (ORDER BY amount DESC) AS "Nпп",
-        SUBSTR(title, 1, 12) || '...' AS "Книга",
+        CASE 
+            WHEN LENGTH(title)>15 THEN
+                  SUBSTR(title, 1, 12) || '...'
+                ELSE
+                  title
+        END AS "Книга",
         name_author AS "Автор",
         amount AS "Кол-во",
         RANK() OVER (ORDER BY amount DESC) AS "Ранг",
-        PERCENT_RANK() OVER (ORDER BY amount DESC) AS "Ранг,%",
+        PERCENT_RANK() OVER (ORDER BY amount DESC)*100 AS "Ранг,%",
         SUM(amount) OVER (ORDER BY amount DESC) AS "Распределение"
     FROM book
     JOIN author ON book.author_id = author.author_id
@@ -127,6 +132,7 @@ SELECT
     ROUND("Ранг,%", 2) AS "Ранг,%"
 FROM RankedBooks
 ORDER BY "Кол-во" DESC;
+
 '''
 
 cursor.execute(report)
