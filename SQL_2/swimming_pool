@@ -1,0 +1,214 @@
+cursor.executescript(
+    '''
+        DROP TABLE IF EXISTS client;
+        CREATE TABLE client (
+        client_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        client_full_name VARCHAR(100),
+        phone_number VARCHAR(11)
+        );
+
+    '''
+)
+
+cursor.executescript(
+    '''
+        INSERT INTO client (client_full_name, phone_number) VALUES
+        ('Ivanov Ivan Ivanovich', '1234567890'),
+        ('Petrov Peter Petrovich', '2345678901'),
+        ('Sidorov Sidorovich', '3456789012'),
+        ('Kozlova Ekaterina Alekseevna', '4567890123'),
+        ('Smirnov Sergey Vladimirovich', '5678901234'),
+        ('Mikhail Mikhailovich Mikhailov', '6789012345'),
+        ('Fedorova Anna Pavlovna', '7890123456'),
+        ('Sokolov Vladimir Alexandrovich', '8901234567'),
+        ('Nikolaeva Marina Dmitrievna', '9012345678'),
+        ('Pavlov Pavel Pavlovich', '0123456789'),
+        ('Vasiliev Vasily Vasilyevich', '9876543210'),
+        ('Dmitrieva Olga Sergeevna', '8765432109'),
+        ('Kuznetsov Konstantin Alekseevich', '7654321098'),
+        ('Andreev Andrey Andreevich', '6543210987'),
+        ('Stepanova Elena Viktorovna', '5432109876'),
+        ('Grigoriev Grigory Grigorievich', '4321098765'),
+        ('Timofeeva Tatyana Ivanovna', '3210987654'),
+        ('Zaitseva Maria Petrovna', '2109876543'),
+        ('Vladislav Nikolaevich Belov', '1098765432'),
+        ('Egorov Egor Egorovich', '0987654321');
+    '''
+)
+
+cursor.executescript(
+    '''
+    DROP TABLE IF EXISTS coach;
+    CREATE TABLE coach (
+    coach_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    coach_full_name VARCHAR(100)
+);
+    '''
+)
+
+cursor.executescript(
+    '''
+    INSERT INTO coach (coach_full_name) VALUES
+    ('Kovalchuk Igor Anatolyevich'),
+    ('Savelieva Alexandra Igorevna'),
+    ('Popov Alexey Vladimirovich'),
+    ('Grigorieva Elena Valentinovna'),
+    ('Andreev Dmitry Petrovich'),
+    ('Maximova Olga Sergeevna'),
+    ('Kuznetsov Ivan Ivanovich'),
+    ('Sokolova Tatyana Viktorovna'),
+    ('Zhukov Anton Stepanovich'),
+    ('Vasilyeva Ekaterina Dmitrievna');
+    '''
+)
+
+cursor.executescript(
+    '''
+    DROP TABLE IF EXISTS service;
+    CREATE TABLE service(
+    service_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    service_name VARCHAR(50),
+    price INTEGER
+    );
+    '''
+)
+
+cursor.executescript(
+    '''
+    INSERT INTO service (service_name, price) VALUES
+    ('jumping from a tower (1)', '350'),
+    ('jumping from a tower (4)', '1400'),
+    ('jumping from a tower (8)', '2700'),
+    ('jumping from a tower (12)', '4000'),
+    ('freediving (1)', '500'),
+    ('freediving (4)', '1900'),
+    ('freediving (8)', '3800'),
+    ('freediving (12)', '5500'),
+    ('children swimming with a coach (1)', '350'),
+    ('children swimming with a coach (4)', '1400'),
+    ('children swimming with a coach (8)', '2700'),
+    ('children swimming with a coach (12)', '4000'),
+    ('free swimming (1)', '300'),
+    ('free swimming (4)', '1100'),
+    ('free swimming (8)', '2200'),
+    ('free swimming (12)', '3300'),
+    ('adult swimming with a coach (1)', '400'),
+    ('adult swimming with a coach (4)', '1500'),
+    ('adult swimming with a coach (8)', '3000'),
+    ('adult swimming with a coach (12)', '4500');
+    '''
+)
+
+cursor.executescript(
+    '''
+    DROP TABLE IF EXISTS schedule;
+    CREATE TABLE schedule (
+    schedule_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    coach_id INT,
+    weekday INTEGER,
+    start_time TIME,
+    end_time TIME,
+    FOREIGN KEY (coach_id) REFERENCES master (coach_id) ON DELETE CASCADE
+);
+    '''
+)
+
+cursor.executescript(
+    '''
+    INSERT INTO schedule (coach_id, weekday, start_time, end_time) VALUES
+    (1, 1, '08:00:00', '21:00:00'),
+    (1, 3, '16:00:00', '21:00:00'),
+    (1, 5, '10:00:00', '15:00:00'),
+    (1, 6, '08:00:00', '19:00:00'),
+    (2, 2, '11:00:00', '21:00:00'),
+    (2, 4, '16:00:00', '21:00:00'),
+    (2, 5, '08:00:00', '21:00:00'),
+    (2, 7, '08:00:00', '21:00:00'),
+    (3, 1, '08:00:00', '21:00:00'),
+    (3, 3, '16:00:00', '21:00:00'),
+    (3, 5, '08:00:00', '21:00:00'),
+    (3, 6, '12:00:00', '20:00:00'),
+    (4, 2, '08:00:00', '21:00:00'),
+    (4, 4, '16:00:00', '21:00:00'),
+    (4, 5, '08:00:00', '17:00:00'),
+    (4, 6, '18:00:00', '21:00:00'),
+    (5, 1, '08:00:00', '21:00:00'),
+    (5, 2, '16:00:00', '21:00:00'),
+    (5, 6, '08:00:00', '21:00:00'),
+    (5, 7, '08:00:00', '15:00:00'),
+    (6, 2, '15:00:00', '21:00:00'),
+    (6, 4, '16:00:00', '21:00:00'),
+    (7, 1, '08:00:00', '21:00:00'),
+    (7, 3, '16:00:00', '21:00:00'),
+    (8, 2, '08:00:00', '21:00:00'),
+    (8, 4, '16:00:00', '21:00:00'),
+    (9, 1, '08:00:00', '21:00:00'),
+    (9, 7, '16:00:00', '21:00:00'),
+    (10, 2, '08:00:00', '12:00:00'),
+    (10, 4, '16:00:00', '21:00:00');
+    '''
+)
+
+cursor.executescript(
+    '''
+    DROP TABLE IF EXISTS schedule_date;
+    CREATE TABLE schedule_date (
+    schedule_date_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    schedule_id INT,
+    record_date DATE,
+    FOREIGN KEY (schedule_id) REFERENCES timetable (schedule_id) ON DELETE CASCADE
+);
+    '''
+)
+
+cursor.executescript(
+    '''
+    INSERT INTO schedule_date(schedule_id, record_date)
+    WITH RECURSIVE create_date(cur_date)
+    AS (
+    SELECT DATE('now')
+    UNION ALL
+    SELECT DATE(cur_date, '+1 day')
+    FROM create_date
+    WHERE cur_date < DATE('now', 'start of month', '+1 month','-1 day')
+    )
+    SELECT schedule_id, cur_date
+    FROM schedule
+    JOIN create_date ON weekday = strftime('%w', cur_date);
+    '''
+)
+
+cursor.executescript(
+    '''
+    DROP TABLE IF EXISTS record;
+    CREATE TABLE record (
+    record_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    schedule_date_id INT,
+    client_id INT,
+    service_id INT,
+    record_time TIME,
+    FOREIGN KEY (client_id) REFERENCES client (client_id) ON DELETE CASCADE,
+    FOREIGN KEY (service_id) REFERENCES service (service_id) ON DELETE CASCADE,
+    FOREIGN KEY (schedule_date_id) REFERENCES schedule_date (schedule_date_id) ON DELETE CASCADE
+);
+    '''
+)
+
+cursor.executescript(
+    '''
+    INSERT INTO record(schedule_date_id, record_time)
+    WITH RECURSIVE create_time(cur_time)
+    AS (
+    SELECT '08:00:00'
+    UNION ALL
+    SELECT TIME(cur_time, '+60 minutes')
+    FROM create_time
+    WHERE cur_time < '21:00:00'
+    )
+    SELECT schedule_date_id, cur_time
+    FROM create_time
+    JOIN schedule_date ON 1=1
+    JOIN schedule ON schedule_date.schedule_id = schedule.schedule_id
+    WHERE cur_time BETWEEN start_time AND TIME(end_time, '-60 minutes');
+    '''
+)
